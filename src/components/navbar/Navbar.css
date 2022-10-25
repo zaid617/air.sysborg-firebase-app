@@ -1,0 +1,25 @@
+.header{
+    display: flex;
+    align-items: center;
+    height: 30px;
+    background-color: #6601eb;
+    color: #ffff;
+    padding: 20px;
+    font-size: 1.4rem;
+}
+
+.header > p{
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 550px){
+    .header{
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 400px){
+    .header{
+        font-size: 0.8rem;
+    }
+}

@@ -1,0 +1,125 @@
+.input{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.container{
+    padding: 40px;
+}
+
+.height{
+    height: 3rem;
+    border-radius: 50px;
+    text-align: center;
+    align-items: center;
+}
+
+.Assignment{
+    width: 30rem;
+    border: 1px solid black;
+}
+
+.btn{
+    cursor: pointer;
+    margin-left: 5px;
+    background-color: #6601eb;
+    color: #ffff;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    border: 0px;
+}
+.first-input{
+    border: 1px solid black;
+}
+
+.btn:hover{
+    background-color: #8932fa;
+}
+
+.btn-primary{
+    width: 80px;
+}
+
+.btn-sec{
+    width: 50px; 
+}
+
+@media screen and (max-width: 930px) {
+    .Assignment{
+        width: 20rem;
+    }
+
+    .first-input{
+        width: 7rem;
+    }
+    .height{
+        height: 2.3rem;
+    }
+
+}
+@media screen and (max-width: 700px) {
+    .input{
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between ;
+    }
+
+    .btn{
+        margin-left: 0px;
+    }
+    .Assignment{
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-left: 60px;
+    }
+
+    .m-l3{
+        margin-left: 3px;
+    }
+}
+
+@media screen and (max-width: 550px){
+    .Assignment{
+        width: 12rem;
+        
+    }
+    .height{
+        height: 2rem;
+    }
+    .first-input{
+        width: 6rem;
+    }
+
+    .btn{
+        width: 60px;
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 400px){
+    .second{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .Assignment{
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-left: 0px;
+    }
+
+    .m-l3{
+        margin-left: 0px;
+    }
+    .last{
+        margin-top: 3px;
+    }
+
+    .height{
+        height: 1.5rem;
+    }
+}
