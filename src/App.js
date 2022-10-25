@@ -4,6 +4,7 @@ import { collection, addDoc, onSnapshot, query } from "firebase/firestore";
 import Input from "./components/inputSection/Input";
 import Navbar from "./components/navbar/Navbar";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDIQaWAhZPkRZDj1hCZ6Y6OuyXWQ_elN9Y",
@@ -27,44 +28,52 @@ export default function App() {
   let [text, setText] = useState("");
   let [textArr, setTextArr] = useState([]);
   let [classID, setClassID] = useState("")
+  const [ip, setIP] = useState('');
 
  
 
-  useEffect(() => {
+    //creating function to load ip address from the API
+    const getData = async () => {
+      const res = await axios.get('https://geolocation-db.com/json/')
+      console.log(res.data);
+      setIP(res.data.IPv4)
+    }
 
+  
+
+
+
+  useEffect(() => {
+    
     let unsubscribe = null;
+
+    getData();
+
+    if (!classID) {
+      return
+    }
 
     const realTimeData = async () => {
 
-      if(!classID){
-        return
+     const q = query(collection(db, classID));
+      unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const assignments = [];
+        querySnapshot.forEach((doc) => {
+          assignments.push(doc.data());
+        });
+        console.log("Assignment ", assignments);
+        setTextArr(assignments)
+      });
+    }
+      
+      realTimeData()
+
+      return () => {
+        unsubscribe()
       }
-  
-      else{
-        const realTimeData = async () => {
-  
-          const q = query(collection(db, classID));
-            unsubscribe = onSnapshot(q, (querySnapshot) => {
-            const assignments = [];
-            querySnapshot.forEach((doc) => {
-              assignments.push(doc.data());
-            });
-            console.log("Assignment ", assignments);
-            setTextArr(assignments)
-          });
+
     
-      }
-    }
-      
 
-    realTimeData();
-      
-    return ()=> {
-      unsubscribe()
-    }
-
-    }
-  
 
   }, [])
 
@@ -76,38 +85,39 @@ export default function App() {
 
     // firebase demo function for getting data from firebase not real time
 
-   if(!text){
-     return
-   }
-
-   else{
-
-    try {
-      const docRef = await addDoc(collection(db, classID), {
-        assignment: text,
-        date: new Date().getTime(),
-      });
-      console.log("Document written with ID: ", docRef.id);
-      setText("");
-    } catch (e) {
-      console.error("Error adding document: ",);
-
+    if (!text) {
+      return
     }
-   }
+
+    else {
+
+      try {
+        const docRef = await addDoc(collection(db, classID), {
+          assignment: text,
+          date: new Date().getTime(),
+          ip:ip
+        });
+        console.log("Document written with ID: ", docRef.id);
+        setText("");
+      } catch (e) {
+        console.error("Error adding document: ",);
+
+      }
+    }
 
 
   }
 
-  const deleteHandler =  (e) => {
+  const deleteHandler = (e) => {
 
     e.preventDefault();
 
     let secID = prompt("Enter Admin Password")
-    
+
     if (secID === "delete312") {
       console.log("delete all");
     }
-    else{
+    else {
       window.alert("Incorrect Password!")
     }
 
@@ -119,18 +129,22 @@ export default function App() {
   }
 
 
-  const idSub = (e)=>{
+  const idSub = (e) => {
     e.preventDefault();
 
-    if(!classID){
+    if (!classID) {
+      setTimeout(() => {
+        document.getElementById("error").style.display = "block"
+      }, 1500);
+      document.getElementById("error").style.display = "none"
       return
     }
 
-    else{
+    else {
       const realTimeData = async () => {
 
         const q = query(collection(db, classID));
-          const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
           const assignments = [];
           querySnapshot.forEach((doc) => {
             assignments.push(doc.data());
@@ -138,9 +152,9 @@ export default function App() {
           console.log("Assignment ", assignments);
           setTextArr(assignments)
         });
-  
+
       }
-  
+
       realTimeData();
     }
 
@@ -153,7 +167,19 @@ export default function App() {
     <>
       <div>
         <Navbar />
-        <Input submitHandler={submitHandler} deleteHandler={deleteHandler} idSub={idSub} setClassID={setClassID} classID={classID} text={text} setText={setText} textArr={textArr} setTextArr={setTextArr} />
+        <Input 
+
+        submitHandler={submitHandler}
+        ip={ip}
+        deleteHandler={deleteHandler} 
+        idSub={idSub} 
+        setClassID={setClassID} 
+        classID={classID} 
+        text={text} 
+        setText={setText} 
+        textArr={textArr} 
+        setTextArr={setTextArr} 
+        />
 
       </div>
 

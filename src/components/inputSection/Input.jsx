@@ -27,7 +27,11 @@ export default function Input(props) {
             </div>
         </form>
 
+
         <hr />
+
+        <p className="error" id="error">Enter Your Class Id !</p>
+
     {(props.textArr.length===0)? null :(
         <div className="mainBox">
 
@@ -38,6 +42,7 @@ export default function Input(props) {
                 id={i}
                 text={elem.assignment}
                 date = {elem.date}
+                ip={elem.ip}
                 />
             })
         }

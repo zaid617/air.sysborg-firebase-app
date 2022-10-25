@@ -56,6 +56,12 @@
     border: 1px solid black;
 }
 
+.error{
+    color: red;
+    text-align: center;
+    display: none;
+}
+
 .btn-primary{
     width: 80px;
 }
