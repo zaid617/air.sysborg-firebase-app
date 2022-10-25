@@ -133,10 +133,10 @@ export default function App() {
     e.preventDefault();
 
     if (!classID) {
+      document.getElementById("error").style.display = "block"
       setTimeout(() => {
-        document.getElementById("error").style.display = "block"
+        document.getElementById("error").style.display = "none"
       }, 1500);
-      document.getElementById("error").style.display = "none"
       return
     }
 
