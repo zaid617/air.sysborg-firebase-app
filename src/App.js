@@ -26,7 +26,7 @@ export default function App() {
 
   let [text, setText] = useState("");
   let [textArr, setTextArr] = useState([]);
-  let [classID, setClassID] = useState("Class ID")
+  let [classID, setClassID] = useState("")
 
  
 
@@ -36,23 +36,35 @@ export default function App() {
 
     const realTimeData = async () => {
 
-      const q = query(collection(db, classID));
-        unsubscribe = onSnapshot(q, (querySnapshot) => {
-        const assignments = [];
-        querySnapshot.forEach((doc) => {
-          assignments.push(doc.data());
-        });
-        console.log("Assignment ", assignments);
-        setTextArr(assignments)
-      });
-
+      if(!classID){
+        return
+      }
+  
+      else{
+        const realTimeData = async () => {
+  
+          const q = query(collection(db, classID));
+            unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const assignments = [];
+            querySnapshot.forEach((doc) => {
+              assignments.push(doc.data());
+            });
+            console.log("Assignment ", assignments);
+            setTextArr(assignments)
+          });
+    
+      }
     }
+      
 
     realTimeData();
-
+      
     return ()=> {
       unsubscribe()
     }
+
+    }
+  
 
   }, [])
 
@@ -76,6 +88,7 @@ export default function App() {
         date: new Date().getTime(),
       });
       console.log("Document written with ID: ", docRef.id);
+      setText("");
     } catch (e) {
       console.error("Error adding document: ",);
 
@@ -89,7 +102,14 @@ export default function App() {
 
     e.preventDefault();
 
-    console.log("delete all");
+    let secID = prompt("Enter Admin Password")
+    
+    if (secID === "delete312") {
+      console.log("delete all");
+    }
+    else{
+      window.alert("Incorrect Password!")
+    }
 
   }
 
