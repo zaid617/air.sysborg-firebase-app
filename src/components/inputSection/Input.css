@@ -8,6 +8,7 @@
 
 .container{
     padding: 40px;
+    font-family: 'Libre Baskerville', serif;
 }
 
 .mainBox{
@@ -30,6 +31,7 @@
 .Assignment{
     width: 30rem;
     border: 1px solid black;
+    background-color: #f7f7f7;
 }
 
 .btn{
@@ -40,13 +42,18 @@
     font-family: 'Playfair Display', serif;
     font-weight: 500;
     border: 0px;
+    transition: all 0.3s ease-in;
 }
 .first-input{
     border: 1px solid black;
+    background-color: #f7f7f7;
 }
 
 .btn:hover{
-    background-color: #8932fa;
+    background-color: rgb(255, 255, 255);
+    color: #6601eb;
+    font-weight: 600;
+    border: 1px solid black;
 }
 
 .btn-primary{
