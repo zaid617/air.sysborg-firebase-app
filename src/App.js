@@ -26,8 +26,9 @@ export default function App() {
 
   let [text, setText] = useState("");
   let [textArr, setTextArr] = useState([]);
+  let [classID, setClassID] = useState("Class ID")
 
-
+ 
 
   useEffect(() => {
 
@@ -35,7 +36,7 @@ export default function App() {
 
     const realTimeData = async () => {
 
-      const q = query(collection(db, "class"));
+      const q = query(collection(db, classID));
         unsubscribe = onSnapshot(q, (querySnapshot) => {
         const assignments = [];
         querySnapshot.forEach((doc) => {
@@ -70,7 +71,7 @@ export default function App() {
    else{
 
     try {
-      const docRef = await addDoc(collection(db, "class"), {
+      const docRef = await addDoc(collection(db, classID), {
         assignment: text,
         date: new Date().getTime(),
       });
@@ -98,6 +99,33 @@ export default function App() {
   }
 
 
+  const idSub = (e)=>{
+    e.preventDefault();
+
+    if(!classID){
+      return
+    }
+
+    else{
+      const realTimeData = async () => {
+
+        const q = query(collection(db, classID));
+          const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          const assignments = [];
+          querySnapshot.forEach((doc) => {
+            assignments.push(doc.data());
+          });
+          console.log("Assignment ", assignments);
+          setTextArr(assignments)
+        });
+  
+      }
+  
+      realTimeData();
+    }
+
+  }
+
 
 
 
@@ -105,7 +133,7 @@ export default function App() {
     <>
       <div>
         <Navbar />
-        <Input submitHandler={submitHandler} deleteHandler={deleteHandler} text={text} setText={setText} textArr={textArr} setTextArr={setTextArr} />
+        <Input submitHandler={submitHandler} deleteHandler={deleteHandler} idSub={idSub} setClassID={setClassID} classID={classID} text={text} setText={setText} textArr={textArr} setTextArr={setTextArr} />
 
       </div>
 

@@ -12,8 +12,8 @@ export default function Input(props) {
             
       <hr/>
 
-        <form className='input' >
-            <div className="inputs"><input type="text" placeholder='Class ID' className='height first-input' /></div>
+        <form className='input' onSubmit={props.idSub}>
+            <div className="inputs"><input type="text" onChange={(e)=>{props.setClassID(e.target.value)}} value={props.classID} placeholder='Class ID' className='height first-input' /><button type="submit"></button></div>
 
             <div className="inputs second">
 
@@ -28,7 +28,7 @@ export default function Input(props) {
         </form>
 
         <hr />
-
+    {(props.textArr.length===0)? null :(
         <div className="mainBox">
 
         {
@@ -42,7 +42,9 @@ export default function Input(props) {
             })
         }
 
-        </div>
+        </div>)
+
+    }
 
         </div>
     )
