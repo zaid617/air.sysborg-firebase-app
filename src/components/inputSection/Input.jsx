@@ -29,6 +29,8 @@ export default function Input(props) {
 
         <hr />
 
+        <div className="mainBox">
+
         {
             props.textArr.map((elem,i)=>{
              return <MainSection 
@@ -40,6 +42,7 @@ export default function Input(props) {
             })
         }
 
+        </div>
 
         </div>
     )

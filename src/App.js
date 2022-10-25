@@ -63,6 +63,12 @@ export default function App() {
 
     // firebase demo function for getting data from firebase not real time
 
+   if(!text){
+     return
+   }
+
+   else{
+
     try {
       const docRef = await addDoc(collection(db, "class"), {
         assignment: text,
@@ -73,11 +79,12 @@ export default function App() {
       console.error("Error adding document: ",);
 
     }
+   }
 
 
   }
 
-  const deleteHandler = (e) => {
+  const deleteHandler =  (e) => {
 
     e.preventDefault();
 

@@ -10,6 +10,16 @@
     padding: 40px;
 }
 
+.mainBox{
+
+    padding: 10px 20px;
+    border: 1px solid rgb(165, 164, 164);
+    border-radius: 20px;
+    margin-top: 10px;
+    background: #ffffff;
+    margin-bottom: 10px;
+}
+
 .height{
     height: 3rem;
     border-radius: 50px;
