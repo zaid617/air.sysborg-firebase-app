@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, onSnapshot, query } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, query , orderBy ,deleteDoc, doc} from "firebase/firestore";
 import Input from "./components/inputSection/Input";
 import Navbar from "./components/navbar/Navbar";
 import { useEffect, useState } from "react";
@@ -28,7 +28,7 @@ export default function App() {
   let [text, setText] = useState("");
   let [textArr, setTextArr] = useState([]);
   let [classID, setClassID] = useState("")
-  const [ip, setIP] = useState('');
+  const [Ip, setIP] = useState('');
 
   useEffect(() => {
     
@@ -46,14 +46,13 @@ export default function App() {
     if (!classID) {
       return
     }
-
     const realTimeData = async () => {
 
-     const q = query(collection(db, classID));
+     const q = query(collection(db, classID), orderBy("date","desc"));
       unsubscribe = onSnapshot(q, (querySnapshot) => {
         const assignments = [];
         querySnapshot.forEach((doc) => {
-          assignments.push(doc.data());
+          assignments.push({id: doc.id, ...doc.data()});
         });
         console.log("Assignment ", assignments);
         setTextArr(assignments)
@@ -66,11 +65,13 @@ export default function App() {
         unsubscribe()
       }
 
+      
+      
+      
+      
+    }, [])
     
-
-
-  }, [])
-
+    const ip = Ip
 
   const submitHandler = async (e) => {
 
@@ -132,8 +133,9 @@ export default function App() {
   }
 
 
-  const deleteItem = () => {
+  const deleteItem = async (textId) => {
     console.log("item deleted");
+    await deleteDoc(doc(db, classID , textId));
   }
 
 
@@ -157,11 +159,11 @@ export default function App() {
     else {
       const realTimeData = async () => {
 
-        const q = query(collection(db, classID));
+        const q = query(collection(db, classID), orderBy("date", "desc"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
           const assignments = [];
           querySnapshot.forEach((doc) => {
-            assignments.push(doc.data());
+            assignments.push({id: doc.id, ...doc.data()});
           });
           console.log("Assignment ", assignments);
           setTextArr(assignments)
@@ -182,7 +184,6 @@ export default function App() {
       <div>
         <Navbar />
         <Input 
-
         submitHandler={submitHandler}
         ip={ip}
         deleteHandler={deleteHandler} 
@@ -193,6 +194,7 @@ export default function App() {
         setText={setText} 
         textArr={textArr} 
         setTextArr={setTextArr} 
+        deleteItem={deleteItem}
         />
 
       </div>

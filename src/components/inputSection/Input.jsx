@@ -1,8 +1,8 @@
-import MainSection from "../mainSection/MainSection"
+// import MainSection from "../mainSection/MainSection"
 import "./Input.css"
+import moment from 'moment';
 
 export default function Input(props) {
-
 
 
 
@@ -38,13 +38,20 @@ export default function Input(props) {
 
                     {
                         props.textArr.map((elem, i) => {
-                            return <MainSection
-                                key={i}
-                                id={i}
-                                text={elem.assignment}
-                                date={elem.date}
-                                ip={elem.ip}
-                            />
+                            return <>
+                            <div className='mainSection' key={i}>
+                            <div className="box1">
+                              <div><strong >{elem.ip}</strong></div>
+                              <div className='date'>{moment(elem.date).fromNow()}</div>
+                              <div ><input className='red' readOnly type="text" onClick={() => props.deleteItem(elem.id)} value={"Delete"} /></div>
+                            </div>
+                      
+                            <div className="box2">
+                              <p>{elem.assignment}</p>
+                            </div>
+                          </div>
+
+                          </>
                         })
                     }
 
