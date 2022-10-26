@@ -84,7 +84,20 @@ export default function App() {
     }
 
     else {
+      if (!classID) {
+      
+        document.getElementById("error").style.display = "block"
+        document.getElementById("classBtn").style.backgroundColor = "red"
+        document.getElementById("classBtn").innerHTML = "&#10799;"
+        setTimeout(() => {
+          document.getElementById("error").style.display = "none"
+          document.getElementById("classBtn").style.backgroundColor = "#6601eb"
+        document.getElementById("classBtn").innerHTML = "&#10003;"
+        }, 1500);
 
+        return;
+      }
+      else{
       try {
         const docRef = await addDoc(collection(db, classID), {
           assignment: text,
@@ -98,6 +111,7 @@ export default function App() {
 
       }
     }
+  }
 
 
   }
@@ -127,10 +141,16 @@ export default function App() {
     e.preventDefault();
 
     if (!classID) {
+      
       document.getElementById("error").style.display = "block"
+      document.getElementById("classBtn").style.backgroundColor = "red"
+      document.getElementById("classBtn").innerHTML = "&#10799;"
       setTimeout(() => {
         document.getElementById("error").style.display = "none"
+        document.getElementById("classBtn").style.backgroundColor = "#6601eb"
+      document.getElementById("classBtn").innerHTML = "&#10003;"
       }, 1500);
+
       return
     }
 

@@ -13,8 +13,8 @@ export default function Input(props) {
             <hr />
 
             <form className='input' onSubmit={props.idSub}>
-                <div className="inputs"><input type="text" onChange={(e) => { props.setClassID(e.target.value) }} value={props.classID} placeholder='Class ID' className='height first-input' /><button type="submit" className="classBtn">
-                    &#10003;</button></div>
+                <div className="inputs"><input type="text" onChange={(e) => { props.setClassID(e.target.value) }} value={props.classID} placeholder='Class ID' className='height first-input' /><button type="submit" className="classBtn" id="classBtn">
+                &#10003;</button></div>
 
                 <div className="inputs second">
 
