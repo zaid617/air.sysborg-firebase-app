@@ -38,12 +38,12 @@ export default function Input(props) {
 
                     {
                         props.textArr.map((elem, i) => {
-                            return <>
-                            <div className='mainSection' key={i}>
+                    
+                return      <div className='mainSection' key={i}>
                             <div className="box1">
                               <div><strong >{elem.ip}</strong></div>
                               <div className='date'>{moment(elem.date).fromNow()}</div>
-                              <div ><input className='red' readOnly type="text" onClick={() => props.deleteItem(elem.id)} value={"Delete"} /></div>
+                              <div ><input className='red' readOnly type="text" onClick={() => props.deleteItem(elem.id,elem.ip)} value={"Delete"} /></div>
                             </div>
                       
                             <div className="box2">
@@ -51,7 +51,7 @@ export default function Input(props) {
                             </div>
                           </div>
 
-                          </>
+                          
                         })
                     }
 

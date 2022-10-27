@@ -103,7 +103,8 @@ export default function App() {
         const docRef = await addDoc(collection(db, classID), {
           assignment: text,
           date: new Date().getTime(),
-          ip:ip
+          ip:ip,
+          delete : "delete"
         });
         console.log("Document written with ID: ", docRef.id);
         setText("");
@@ -119,12 +120,16 @@ export default function App() {
 
   const deleteHandler = (e) => {
 
-    e.preventDefault();
+    e.preventDefault()
 
     let secID = prompt("Enter Admin Password")
 
     if (secID === "delete312") {
       console.log("delete all");
+      textArr.map(async()=>{
+        await deleteDoc(doc(db, classID , "delete"));
+      })
+      
     }
     else {
       window.alert("Incorrect Password!")
@@ -133,9 +138,14 @@ export default function App() {
   }
 
 
-  const deleteItem = async (textId) => {
-    console.log("item deleted");
+  const deleteItem = async (textId ,ip) => {
+    if(ip===Ip){
+      console.log("item deleted");
     await deleteDoc(doc(db, classID , textId));
+    }
+    else{
+      alert("you can not delete others text")
+    }
   }
 
 

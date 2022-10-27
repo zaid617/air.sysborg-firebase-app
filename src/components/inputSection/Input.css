@@ -154,6 +154,19 @@
     }
 }
 
+@media screen and (max-width: 500px){
+    .box1{
+        padding: 15px;
+        font-size: 12px;
+    }
+    .box2{
+        font-size: 12px;
+    }
+    .red{
+        font-size: 13px;
+    }
+}
+
 
 @media screen and (max-width: 930px) {
     .Assignment{
