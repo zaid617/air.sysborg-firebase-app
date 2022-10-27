@@ -16,9 +16,12 @@
     padding: 10px 20px;
     border: 1px solid rgb(165, 164, 164);
     border-radius: 20px;
-    margin-top: 10px;
-    background: #ffffff;
+    margin-top: 30px;
+    background: #f7f7f7;
     margin-bottom: 10px;
+    box-shadow: 0 0px 10px 0px rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .height{
@@ -145,7 +148,8 @@
 }
 
 .red:hover {
-    font-weight: 600;
+    font-weight: 500;
+    border-bottom: 1px solid red;
 }
 
 @media screen and (max-width: 900px) {

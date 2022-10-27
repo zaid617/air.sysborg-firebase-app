@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, onSnapshot, query , orderBy ,deleteDoc, doc} from "firebase/firestore";
+import { collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "firebase/firestore";
 import Input from "./components/inputSection/Input";
 import Navbar from "./components/navbar/Navbar";
 import { useEffect, useState } from "react";
@@ -30,48 +30,47 @@ export default function App() {
   let [classID, setClassID] = useState("")
   const [Ip, setIP] = useState('');
 
+  //creating function to load ip address from the API
+  const getData = async () => {
+    const res = await axios.get('https://geolocation-db.com/json/')
+    console.log(res.data);
+    setIP(res.data.IPv4)
+  }
+
+  getData();
+  const ip = Ip
+
   useEffect(() => {
-    
+
     let unsubscribe = null;
-
-      //creating function to load ip address from the API
-      const getData = async () => {
-        const res = await axios.get('https://geolocation-db.com/json/')
-        console.log(res.data);
-        setIP(res.data.IPv4)
-      }
-
-    getData();
-
     if (!classID) {
       return
     }
     const realTimeData = async () => {
 
-     const q = query(collection(db, classID), orderBy("date","desc"));
+      const q = query(collection(db, classID), orderBy("date", "desc"));
       unsubscribe = onSnapshot(q, (querySnapshot) => {
         const assignments = [];
         querySnapshot.forEach((doc) => {
-          assignments.push({id: doc.id, ...doc.data()});
+          assignments.push({ id: doc.id, ...doc.data() });
         });
         console.log("Assignment ", assignments);
         setTextArr(assignments)
       });
     }
-      
-      realTimeData()
 
-      return () => {
-        unsubscribe()
-      }
+    realTimeData()
 
-      
-      
-      
-      
-    }, [])
-    
-    const ip = Ip
+    return () => {
+      unsubscribe()
+    }
+
+
+
+
+
+  }, [])
+
 
   const submitHandler = async (e) => {
 
@@ -86,34 +85,34 @@ export default function App() {
 
     else {
       if (!classID) {
-      
+
         document.getElementById("error").style.display = "block"
         document.getElementById("classBtn").style.backgroundColor = "red"
         document.getElementById("classBtn").innerHTML = "&#10799;"
         setTimeout(() => {
           document.getElementById("error").style.display = "none"
           document.getElementById("classBtn").style.backgroundColor = "#6601eb"
-        document.getElementById("classBtn").innerHTML = "&#10003;"
+          document.getElementById("classBtn").innerHTML = "&#10003;"
         }, 1500);
 
         return;
       }
-      else{
-      try {
-        const docRef = await addDoc(collection(db, classID), {
-          assignment: text,
-          date: new Date().getTime(),
-          ip:ip,
-          delete : "delete"
-        });
-        console.log("Document written with ID: ", docRef.id);
-        setText("");
-      } catch (e) {
-        console.error("Error adding document: ",);
+      else {
+        try {
+          const docRef = await addDoc(collection(db, classID), {
+            assignment: text,
+            date: new Date().getTime(),
+            ip: ip,
+            delete: "delete"
+          });
+          console.log("Document written with ID: ", docRef.id);
+          setText("");
+        } catch (e) {
+          console.error("Error adding document: ",);
 
+        }
       }
     }
-  }
 
 
   }
@@ -126,10 +125,10 @@ export default function App() {
 
     if (secID === "delete312") {
       console.log("delete all");
-      textArr.map(async()=>{
-        await deleteDoc(doc(db, classID , "delete"));
+      textArr.map(async () => {
+        await deleteDoc(doc(db, classID, "delete"));
       })
-      
+
     }
     else {
       window.alert("Incorrect Password!")
@@ -138,12 +137,12 @@ export default function App() {
   }
 
 
-  const deleteItem = async (textId ,ip) => {
-    if(ip===Ip){
+  const deleteItem = async (textId, ip) => {
+    if (ip === Ip) {
       console.log("item deleted");
-    await deleteDoc(doc(db, classID , textId));
+      await deleteDoc(doc(db, classID, textId));
     }
-    else{
+    else {
       alert("you can not delete others text")
     }
   }
@@ -153,14 +152,14 @@ export default function App() {
     e.preventDefault();
 
     if (!classID) {
-      
+
       document.getElementById("error").style.display = "block"
       document.getElementById("classBtn").style.backgroundColor = "red"
       document.getElementById("classBtn").innerHTML = "&#10799;"
       setTimeout(() => {
         document.getElementById("error").style.display = "none"
         document.getElementById("classBtn").style.backgroundColor = "#6601eb"
-      document.getElementById("classBtn").innerHTML = "&#10003;"
+        document.getElementById("classBtn").innerHTML = "&#10003;"
       }, 1500);
 
       return
@@ -173,7 +172,7 @@ export default function App() {
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
           const assignments = [];
           querySnapshot.forEach((doc) => {
-            assignments.push({id: doc.id, ...doc.data()});
+            assignments.push({ id: doc.id, ...doc.data() });
           });
           console.log("Assignment ", assignments);
           setTextArr(assignments)
@@ -193,18 +192,18 @@ export default function App() {
     <>
       <div>
         <Navbar />
-        <Input 
-        submitHandler={submitHandler}
-        ip={ip}
-        deleteHandler={deleteHandler} 
-        idSub={idSub} 
-        setClassID={setClassID} 
-        classID={classID} 
-        text={text} 
-        setText={setText} 
-        textArr={textArr} 
-        setTextArr={setTextArr} 
-        deleteItem={deleteItem}
+        <Input
+          submitHandler={submitHandler}
+          ip={ip}
+          deleteHandler={deleteHandler}
+          idSub={idSub}
+          setClassID={setClassID}
+          classID={classID}
+          text={text}
+          setText={setText}
+          textArr={textArr}
+          setTextArr={setTextArr}
+          deleteItem={deleteItem}
         />
 
       </div>
