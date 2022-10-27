@@ -39,7 +39,7 @@ export default function App() {
   }
 
   getData();
-  const ip = Ip
+  let ip = Ip
 
   useEffect(() => {
 
@@ -142,9 +142,19 @@ export default function App() {
       await deleteDoc(doc(db, classID, textId));
     }
     else {
+
+    let secID = prompt("Enter Admin Password")
+    if (secID === "delete312") {
+      await deleteDoc(doc(db, classID, textId));
+    }
+
+    else
+    {
       alert("You Can't Delete Others Text !")
+      
     }
   }
+}
 
 
   const idSub = (e) => {
