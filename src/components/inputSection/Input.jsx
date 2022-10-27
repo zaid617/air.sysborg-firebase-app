@@ -3,6 +3,7 @@ import moment from 'moment';
 
 export default function Input(props) {
 
+    const link = "https://"
 
 
     return (
@@ -46,7 +47,7 @@ export default function Input(props) {
                                 </div>
 
                                 <div className="box2">
-                                    <p>{elem.assignment}</p>
+                                    {(elem.assignment.slice(0,8)===link)? <p><a href={elem.assignment} rel="noreferrer" target="_blank">{elem.assignment}</a></p>:<p>{elem.assignment}</p>}              
                                 </div>
                             </div>
 
