@@ -59,7 +59,7 @@
     font-family: 'Playfair Display', serif;
     font-weight: 500;
     border: 0px;
-    transition: all 0.3s ease-in;
+    transition: all 0.2s ease-in;
 }
 .first-input{
     border: 1px solid black;
@@ -67,19 +67,18 @@
 }
 
 .btn:hover{
-    background-color: #f7f7f769;
-    color: #6601eb;
-    font-weight: 600;
+    background-color: #5b13b9;
+    color: #ffffff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-decoration: underline;
-    border: 1px solid black;
+    box-shadow: 0px 0px 3px 0px black;
 
 }
 .classBtn:hover{
-    background-color: rgb(255, 255, 255);
-    color: #6601eb;
-    font-weight: 600;
+    background-color: #5b13b9;
+    color: #ffffff;
     border: 1px solid black;
+    box-shadow: 0px 0px 2px 0px black;
 }
 
 .error{
