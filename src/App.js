@@ -5,6 +5,7 @@ import Input from "./components/inputSection/Input";
 import Navbar from "./components/navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { async } from "@firebase/util";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDIQaWAhZPkRZDj1hCZ6Y6OuyXWQ_elN9Y",
@@ -29,11 +30,11 @@ export default function App() {
   let [textArr, setTextArr] = useState([]);
   let [classID, setClassID] = useState("")
   const [Ip, setIP] = useState('');
+  const[Unsubscribe, setUnsubscribe] = useState(()=>{return null})
 
   //creating function to load ip address from the API
   const getData = async () => {
     const res = await axios.get('https://geolocation-db.com/json/')
-    console.log(res.data);
     setIP(res.data.IPv4)
   }
 
@@ -54,12 +55,12 @@ export default function App() {
         querySnapshot.forEach((doc) => {
           assignments.push({ id: doc.id, ...doc.data() });
         });
-        console.log("Assignment ", assignments);
         setTextArr(assignments)
       });
     }
 
     realTimeData()
+    setUnsubscribe(unsubscribe())
 
     return () => {
       unsubscribe()
@@ -75,10 +76,6 @@ export default function App() {
   const submitHandler = async (e) => {
 
     e.preventDefault();
-
-
-    // firebase demo function for getting data from firebase not real time
-
     if (!text) {
       return
     }
@@ -103,9 +100,7 @@ export default function App() {
             assignment: text,
             date: new Date().getTime(),
             ip: ip,
-            delete: "delete"
           });
-          console.log("Document written with ID: ", docRef.id);
           setText("");
         } catch (e) {
           console.error("Error adding document: ",);
@@ -117,22 +112,26 @@ export default function App() {
 
   }
 
-  const deleteHandler = (e) => {
+  const deleteHandler = async(e) => {
 
     e.preventDefault()
 
     let secID = prompt("Enter Admin Password")
 
     if (secID === "delete312") {
-      console.log("delete all");
-      textArr.map(async () => {
-        await deleteDoc(doc(db, classID, "delete"));
-      })
+        textArr.map(async(elem) => {
+          await deleteDoc(doc(db, classID, elem.id));
+        })
 
-    }
-    else {
-      window.alert("Incorrect Password!")
-    }
+      }
+      else {
+        window.alert("Incorrect Password!")
+        return;
+      }
+
+      return ()=>{
+        Unsubscribe()
+      }
 
   }
 
@@ -143,13 +142,14 @@ export default function App() {
       await deleteDoc(doc(db, classID, textId));
     }
     else {
-      alert("you can not delete others text")
+      alert("You Can't Delete Others Text !")
     }
   }
 
 
   const idSub = (e) => {
     e.preventDefault();
+    let unsubscribe = null
 
     if (!classID) {
 
@@ -167,9 +167,8 @@ export default function App() {
 
     else {
       const realTimeData = async () => {
-
         const q = query(collection(db, classID), orderBy("date", "desc"));
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+         unsubscribe = onSnapshot(q, (querySnapshot) => {
           const assignments = [];
           querySnapshot.forEach((doc) => {
             assignments.push({ id: doc.id, ...doc.data() });
