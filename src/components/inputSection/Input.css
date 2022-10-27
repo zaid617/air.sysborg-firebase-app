@@ -48,7 +48,7 @@
 .Assignment{
     width: 30rem;
     border: 1px solid black;
-    background-color: #f7f7f7;
+    background-color: #ffff;
 }
 
 .btn{
@@ -63,7 +63,7 @@
 }
 .first-input{
     border: 1px solid black;
-    background-color:#f7f7f769;
+    background-color:#ffff;
 }
 
 .btn:hover{
