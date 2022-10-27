@@ -1,4 +1,3 @@
-// import MainSection from "../mainSection/MainSection"
 import "./Input.css"
 import moment from 'moment';
 
@@ -14,7 +13,7 @@ export default function Input(props) {
 
             <form className='input' onSubmit={props.idSub}>
                 <div className="inputs"><input type="text" onChange={(e) => { props.setClassID(e.target.value) }} value={props.classID} placeholder='Class ID' className='height first-input' /><button type="submit" className="classBtn" id="classBtn">
-                &#10003;</button></div>
+                    &#10003;</button></div>
 
                 <div className="inputs second">
 
@@ -38,20 +37,20 @@ export default function Input(props) {
 
                     {
                         props.textArr.map((elem, i) => {
-                    
-                return      <div className='mainSection' key={i}>
-                            <div className="box1">
-                              <div><strong >{elem.ip}</strong></div>
-                              <div className='date'>{moment(elem.date).fromNow()}</div>
-                              <div ><input className='red' readOnly type="text" onClick={() => props.deleteItem(elem.id,elem.ip)} value={"Delete"} /></div>
-                            </div>
-                      
-                            <div className="box2">
-                              <p>{elem.assignment}</p>
-                            </div>
-                          </div>
 
-                          
+                            return <div className='mainSection' key={i}>
+                                <div className="box1">
+                                    <div><strong >{elem.ip}</strong></div>
+                                    <div className='date'>{moment(elem.date).fromNow()}</div>
+                                    <div ><input className='red' readOnly type="text" onClick={() => props.deleteItem(elem.id, elem.ip)} value={"Delete"} /></div>
+                                </div>
+
+                                <div className="box2">
+                                    <p>{elem.assignment}</p>
+                                </div>
+                            </div>
+
+
                         })
                     }
 

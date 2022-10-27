@@ -30,7 +30,7 @@ export default function App() {
   let [textArr, setTextArr] = useState([]);
   let [classID, setClassID] = useState("")
   const [Ip, setIP] = useState('');
-  const[Unsubscribe, setUnsubscribe] = useState(()=>{return null})
+  const [Unsubscribe, setUnsubscribe] = useState(() => { return null })
 
   //creating function to load ip address from the API
   const getData = async () => {
@@ -112,26 +112,26 @@ export default function App() {
 
   }
 
-  const deleteHandler = async(e) => {
+  const deleteHandler = async (e) => {
 
     e.preventDefault()
 
     let secID = prompt("Enter Admin Password")
 
     if (secID === "delete312") {
-        textArr.map(async(elem) => {
-          await deleteDoc(doc(db, classID, elem.id));
-        })
+      textArr.map(async (elem) => {
+        await deleteDoc(doc(db, classID, elem.id));
+      })
 
-      }
-      else {
-        window.alert("Incorrect Password!")
-        return;
-      }
+    }
+    else {
+      window.alert("Incorrect Password!")
+      return;
+    }
 
-      return ()=>{
-        Unsubscribe()
-      }
+    return () => {
+      Unsubscribe()
+    }
 
   }
 
@@ -168,7 +168,7 @@ export default function App() {
     else {
       const realTimeData = async () => {
         const q = query(collection(db, classID), orderBy("date", "desc"));
-         unsubscribe = onSnapshot(q, (querySnapshot) => {
+        unsubscribe = onSnapshot(q, (querySnapshot) => {
           const assignments = [];
           querySnapshot.forEach((doc) => {
             assignments.push({ id: doc.id, ...doc.data() });
