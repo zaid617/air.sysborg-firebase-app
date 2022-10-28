@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, serverTimestamp, query, orderBy, deleteDoc, doc } from "firebase/firestore";
 import Input from "./components/inputSection/Input";
 import Navbar from "./components/navbar/Navbar";
 import { useEffect, useState } from "react";
@@ -29,22 +29,23 @@ export default function App() {
   let [text, setText] = useState("");
   let [textArr, setTextArr] = useState([]);
   let [classID, setClassID] = useState("")
-  const [Ip, setIP] = useState('');
+  const [ipAddress, setIP] = useState('');
   const [Unsubscribe, setUnsubscribe] = useState(() => { return null })
 
-  //creating function to load ip address from the API
-  const getData = async () => {
-    const res = await axios.get('https://geolocation-db.com/json/')
-    setIP(res.data.IPv4)
-  }
-
-  getData();
-  let ip = Ip
+  const ip2 = ipAddress
 
   useEffect(() => {
 
     let unsubscribe = null;
-    if (!classID) {
+    //creating function to load ip address from the API
+    const getData = async () => {
+    const res = await axios.get('https://geolocation-db.com/json/89eb4d70-4cbe-11ed-a0f2-51b843ebe8d7')
+    setIP(res.data.IPv4)
+    console.log(res.data.IPv4)
+  }
+  getData();
+
+  if (!classID) {
       return
     }
     const realTimeData = async () => {
@@ -99,7 +100,7 @@ export default function App() {
           const docRef = await addDoc(collection(db, classID), {
             assignment: text,
             date: new Date().getTime(),
-            ip: ip,
+            ip: ip2,
           });
           setText("");
         } catch (e) {
@@ -137,7 +138,7 @@ export default function App() {
 
 
   const deleteItem = async (textId, ip) => {
-    if (ip === Ip) {
+    if (ip === ipAddress) {
       console.log("item deleted");
       await deleteDoc(doc(db, classID, textId));
     }
@@ -159,6 +160,7 @@ export default function App() {
 
   const idSub = (e) => {
     e.preventDefault();
+
     let unsubscribe = null
 
     if (!classID) {
@@ -203,7 +205,7 @@ export default function App() {
         <Navbar />
         <Input
           submitHandler={submitHandler}
-          ip={ip}
+          ip={ipAddress}
           deleteHandler={deleteHandler}
           idSub={idSub}
           setClassID={setClassID}

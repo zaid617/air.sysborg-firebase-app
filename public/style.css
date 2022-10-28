@@ -7,7 +7,7 @@
 body{
   overflow-y: scroll;
   min-height: 100vh;
-  background: linear-gradient(#ffff,#f9f6f0);
+  background: linear-gradient(#ffff,#fff0d4);
 }
 
 ::-webkit-scrollbar {
