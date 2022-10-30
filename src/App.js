@@ -5,7 +5,6 @@ import Input from "./components/inputSection/Input";
 import Navbar from "./components/navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { async } from "@firebase/util";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDIQaWAhZPkRZDj1hCZ6Y6OuyXWQ_elN9Y",
@@ -32,20 +31,20 @@ export default function App() {
   const [ipAddress, setIP] = useState('');
   const [Unsubscribe, setUnsubscribe] = useState(() => { return null })
 
-  const ip2 = ipAddress
-
-  useEffect(() => {
-
-    let unsubscribe = null;
-    //creating function to load ip address from the API
-    const getData = async () => {
+  
+  let unsubscribe = null;
+  //creating function to load ip address from the API
+  const getData = async () => {
     const res = await axios.get('https://geolocation-db.com/json/89eb4d70-4cbe-11ed-a0f2-51b843ebe8d7')
     setIP(res.data.IPv4)
     console.log(res.data.IPv4)
   }
   getData();
+  const ip2 = ipAddress
 
-  if (!classID) {
+  useEffect(() => {
+
+    if (!classID) {
       return
     }
     const realTimeData = async () => {
@@ -144,18 +143,17 @@ export default function App() {
     }
     else {
 
-    let secID = prompt("Enter Admin Password")
-    if (secID === "delete312") {
-      await deleteDoc(doc(db, classID, textId));
-    }
+      let secID = prompt("Enter Admin Password")
+      if (secID === "delete312") {
+        await deleteDoc(doc(db, classID, textId));
+      }
 
-    else
-    {
-      alert("You Can't Delete Others Text !")
-      
+      else {
+        alert("You Can't Delete Others Text !")
+
+      }
     }
   }
-}
 
 
   const idSub = (e) => {
