@@ -32,17 +32,21 @@ export default function App() {
   const [Unsubscribe, setUnsubscribe] = useState(() => { return null })
 
   
-  let unsubscribe = null;
   //creating function to load ip address from the API
   const getData = async () => {
-    const res = await axios.get('https://geolocation-db.com/json/89eb4d70-4cbe-11ed-a0f2-51b843ebe8d7')
-    setIP(res.data.IPv4)
-    console.log(res.data.IPv4)
+    axios.get(`https://studygeeks.herokuapp.com/getIp`)
+    .then(function (response) {
+        setIP(response.data.slice(7));
+    })
+    .catch(function (error) {
+        console.log(error);
+    })
   }
   getData();
   const ip2 = ipAddress
-
+  
   useEffect(() => {
+    let unsubscribe = null;
 
     if (!classID) {
       return
