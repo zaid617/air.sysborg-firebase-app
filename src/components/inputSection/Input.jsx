@@ -18,7 +18,7 @@ export default function Input(props) {
 
                 <div className="inputs second">
 
-                    <input type="text" placeholder='Enter Any Text Or Link' onChange={(e) => { props.setText(e.target.value) }} value={props.text} className='height Assignment' />
+                    <input type="text" placeholder='Enter Any Text Or Link' onChange={(e) => { props.setText(e.target.value)}} value={props.text} className='height Assignment' />
 
                     <button className='height btn btn-primary m-l3' onClick={props.submitHandler}>Submit</button>
                 </div>

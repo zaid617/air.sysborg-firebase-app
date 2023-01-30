@@ -34,25 +34,43 @@ export default function App() {
   
   //creating function to load ip address from the API
   const getData = async () => {
-    axios.get(`https://studygeeks.herokuapp.com/getIp`)
+    axios.get(`https://air-production-203c.up.railway.app/getIp`)
     .then(function (response) {
         setIP(response.data.slice(7));
+         localStorage.setItem("userIp", JSON.stringify(response.data.slice(7)))
     })
     .catch(function (error) {
-        console.log(error);
+         console.log(error);
+         localStorage.setItem("userIp", "null")
     })
   }
-  getData();
-  const ip2 = ipAddress
-  
-  useEffect(() => {
-    let unsubscribe = null;
+    
+    const ip2 = ipAddress
+    
+    useEffect(() => {
 
+
+         if ((localStorage.getItem("userIp")) === null) {
+
+          getData();
+          console.log("useEffect se ip get ho rhi h");
+    
+     }
+    
+   else{
+       setIP(localStorage.getItem("userIp"))
+       console.log("local storage se ip get ho rhi h");
+
+     }
+
+
+    let unsubscribe = null;
+    
     if (!classID) {
       return
     }
     const realTimeData = async () => {
-
+      
       const q = query(collection(db, classID), orderBy("date", "desc"));
       unsubscribe = onSnapshot(q, (querySnapshot) => {
         const assignments = [];
@@ -62,7 +80,7 @@ export default function App() {
         setTextArr(assignments)
       });
     }
-
+    
     realTimeData()
     setUnsubscribe(unsubscribe())
 
@@ -72,10 +90,10 @@ export default function App() {
 
 
 
-
-
+    
+    
   }, [])
-
+  
 
   const submitHandler = async (e) => {
 
@@ -108,7 +126,7 @@ export default function App() {
           setText("");
         } catch (e) {
           console.error("Error adding document: ",);
-
+          setText("");
         }
       }
     }
