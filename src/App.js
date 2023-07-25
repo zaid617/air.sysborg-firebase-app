@@ -34,16 +34,18 @@ export default function App() {
   
   //creating function to load ip address from the API
   const getData = async () => {
-    axios.get(`https://air-production-203c.up.railway.app/getIp`)
+    axios.get(`https://api.ipify.org?format=json`)
     .then(function (response) {
-        setIP(response.data.slice(7));
-         localStorage.setItem("userIp", JSON.stringify(response.data.slice(7)))
+         setIP(response.data.ip);
+          localStorage.setItem("userIp", JSON.stringify(response.data.ip))
     })
     .catch(function (error) {
          console.log(error);
          localStorage.setItem("userIp", "null")
     })
   }
+
+
     
     const ip2 = ipAddress
     

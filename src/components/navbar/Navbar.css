@@ -1,11 +1,17 @@
 .header {
     display: flex;
     align-items: center;
-    height: 30px;
+    height: 100px;
     background-color: #6601eb;
     color: #ffff;
-    padding: 20px;
+    padding: 40px;
     font-size: 1.4rem;
+    margin: 5px;
+    justify-content: center;
+    align-items: center;
+    border: 0px;
+    border-bottom-right-radius: 80%;
+    border-bottom-left-radius: 40%;
 }
 
 .header>p {
